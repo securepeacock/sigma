@@ -13,7 +13,11 @@ logsource:
 detection:
   selection:
     Image|endswith: 'crontab'
-    CommandLine|contains: '/tmp/'
+    CommandLine|contains:
+    - '/tmp/'
+    - '/Library/'
+    - '/etc/'
+    - '/opt/'
   condition: selection
 falsepositives:
   - Legitimate administration activities
