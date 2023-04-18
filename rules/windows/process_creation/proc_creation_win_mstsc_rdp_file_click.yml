@@ -1,0 +1,25 @@
+title: Suspicious RDP File Click
+id: 9f457686-c62e-4bd7-9a99-c91de193979f
+status: experimental
+description: Detects suspicious RDP file clicks which could be an initial foothold as an attacker could gain partial control.
+references:
+    - https://www.blackhillsinfosec.com/rogue-rdp-revisiting-initial-access-methods/
+author: 'Christopher Peacock @SecurePeacock, SCYTHE @scythe_io'
+date: 2023/04/18
+tags:
+    - attack.execution
+    - attack.T1204.002
+    - attack.command_and_control
+    - attack.T1219
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        - Image|endswith: '\mstsc.exe'
+        - CommandLine|endswith: '.rdp\"'
+        - ParentImage|endswith: '\explorer.exe'
+    condition: all of selection
+falsepositives:
+    -  Certain admin activity may trigger this rule.
+level: medium
