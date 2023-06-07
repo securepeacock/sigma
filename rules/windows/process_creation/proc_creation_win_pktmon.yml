@@ -1,0 +1,23 @@
+title: Packet Monitor Execution
+id: 142fb2f0-0547-11ee-be56-0242ac120002
+status: experimental
+description: Detects the execution of PktMon, which adversaries may use to sniff network traffic.
+references:
+    - https://learn.microsoft.com/en-us/windows-server/networking/technologies/pktmon/pktmon
+author: 'Christopher Peacock @securepeacock, SCYTHE @scythe_io'
+date: 2023/06/07
+tags:
+    - attack.discovery
+    - attack.t1018
+    - attack.t0846
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        - Image|endswith: '\pktmon.exe'
+        - OriginalFileName: 'PktMon.EXE'
+    condition: selection
+falsepositives:
+    - Legitimate usage of Packet Monitor by network and system engineers.
+level: low
